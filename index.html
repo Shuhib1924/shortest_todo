@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./dist/script.js"></script>
+    <style>
+      .completed {
+        text-decoration: line-through;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <div x-data="{todos:[], userInput:''}">
+      <from>
+        <input type="text" x-model="userInput" placeholder="type here" />
+        <button
+          x-on:click="if(userInput.trim().length > 0) todos.push({name: userInput, completed: false}); userInput=''"
+        >
+          add
+        </button>
+      </from>
+      <button @click="todos=todos.filter((i)=>i!=i)" x-show="todos.length>0">
+        delete all 1
+      </button>
+      <!-- <p x-text="userInput"></p> -->
+      <template x-for="todo in todos">
+        <div>
+          <input type="checkbox" x-model="todo.completed" />
+          <span
+            x-text="todo.name"
+            x-bind:class="{'completed': todo.completed}"
+          ></span>
+          <button x-on:click="todos=todos.filter((i)=>i!= todo)">x</button>
+        </div>
+      </template>
+      <button @click="todos=[]" x-show="todos.length>0">delete all 2</button>
+      <hr />
+      <div>
+          <p>todos:<span x-text="todos.length"></span></p>
+        <p>finished: <span x-text="todos.filter((i)=> i.completed).length"></span></p>
+      </div>
+    </div>
+  </body>
+</html>
